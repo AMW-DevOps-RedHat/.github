@@ -1,366 +1,349 @@
-# Comprehensive DevOps Projects Overview
+# RHCSA/RHCE DevOps Projects Portfolio
 
-This document provides an overview of three interconnected DevOps projects that progressively build skills from basic Linux administration to advanced high availability architectures. Each project focuses on different aspects of system administration and infrastructure as code.
+A comprehensive collection of three interconnected DevOps projects that progressively build skills from basic Linux administration to advanced high availability architectures. Each project focuses on different aspects of system administration, infrastructure as code, and automation.
 
-## Project 1: Enterprise Linux Basics (Prjct_01)
+---
 
-### Project Overview
+## 📋 Projects Overview
 
-This project is a comprehensive learning environment that simulates a small-scale enterprise server environment with three hosts (web, app, db) configured manually and securely. It's designed to help users practice essential Linux system administration skills needed in most entry-level jobs and RHCSA-aligned roles.
+| # | Project | Status | Key Technologies |
+|---|---------|--------|------------------|
+| 1 | [Enterprise Linux Basics](#project-1-enterprise-linux-basics) | ✅ Complete | KVM/QEMU, Rocky Linux, Prometheus, Grafana, Bash |
+| 2 | [Linux Automation Infrastructure](#project-2-linux-automation-infrastructure) | ✅ Complete | Ansible, Docker, PostgreSQL, NGINX, GitHub Actions |
+| 3 | [Linux High Availability](#project-3-linux-high-availability) | 🚧 In Progress | Terraform, Ansible, HAProxy, Keepalived, ELK Stack |
 
-The project is organized into multiple milestones, each focusing on different aspects of Linux system administration:
+---
 
-- **Milestone A**: Virtual Machine setup and user management
-- **Milestone B**: (Currently empty)
-- **Milestone C**: Backup and monitoring solutions
+## Project 1: Enterprise Linux Basics
 
-### Project Structure
+**Repository:** [`enterprise-linux-basics-Prjct_01`](./enterprise-linux-basics-Prjct_01/)
 
+### Overview
+A comprehensive learning environment simulating a small-scale enterprise server environment with three hosts (web, app, db) configured manually and securely. Designed to practice essential Linux system administration skills aligned with RHCSA objectives.
+
+### Architecture
 ```
-├── README.md                   # Project overview
-├── RedHat Linux Practice.png   # Visual representation of the project
-├── Milestone A/
-│   ├── Users_Creatiations_Configurations.sh  # User management script
-│   ├── VMs_installation_Script.sh           # VM creation automation
-│   └── VMs Users/                           # Directory for VM-related files
-├── Milestone B/                             # (Empty)
-└── Milestone C/
-    ├── BackUpScript.sh                      # Automated backup solution
-    ├── Grafana Dashboard.png               # Monitoring dashboard screenshot
-    ├── Grafana Imported Dashboard.png      # Additional dashboard screenshots
-    ├── Grafana Login.png                   # Grafana login screenshot
-    ├── Grafana Monitoring.png              # Grafana monitoring screenshot
-    ├── grafana.repo                        # Grafana repository configuration
-    ├── iftop.png                           # Network monitoring screenshot
-    ├── node_exporter.service               # Systemd service for node exporter
-    ├── prometheus.service                  # Systemd service for Prometheus
-    ├── prometheus.yml                      # Prometheus configuration
-    └── sar.png                             # SAR monitoring screenshot
+┌─────────────────────────────────────────────────────┐
+│                    Host Machine                     │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
+│  │  ServOneVM  │  │ ServTwoVM   │  │ ServThreeVM │  │
+│  │   (Web)     │  │   (App)     │  │    (DB)     │  │
+│  │  Rocky 9.5  │  │  Rocky 9.5  │  │  Rocky 9.5  │  │
+│  │  3GB RAM    │  │  3GB RAM    │  │  3GB RAM    │  │
+│  │  1 vCPU     │  │  1 vCPU     │  │  1 vCPU     │  │
+│  │  30GB Disk  │  │  30GB Disk  │  │  30GB Disk  │  │
+│  └─────────────┘  └─────────────┘  └─────────────┘  │
+│         KVM/QEMU Virtualization                     │
+└─────────────────────────────────────────────────────┘
 ```
 
-### Key Components
+### Completed Milestones
 
-#### Milestone A - VM Setup and User Management (FINISHED)
+#### ✅ Milestone A - VM Setup and User Management
+- **VMs_installation_Script.sh**: Automates creation of 3 Rocky Linux VMs using KVM/QEMU and virt-install
+- **Users_Creatiations_Configurations.sh**: Interactive user creation with shell selection, sudo privileges, and SSH key distribution
 
-- **VMs_installation_Script.sh**
-  - Automates the creation of 3 Rocky Linux minimal server VMs using KVM/QEMU and virt-install
-  - Configures VMs with 3GB RAM, 1 vCPU, 30GB disk space
-  - Uses Rocky Linux 9.5 ISO for installation
-  - Creates VMs named ServOneVM, ServTwoVM, and ServThreeVM
+#### ✅ Milestone C - Backup and Monitoring
+- **BackUpScript.sh**: Automated backup solution for `/etc` with compression, logging, and 60-day retention
+- **Monitoring Stack**:
+  - Prometheus for metrics collection
+  - Node Exporter for system metrics
+  - Grafana for visualization dashboards
+  - Pre-configured systemd services and prometheus.yml
 
-- **Users_Creatiations_Configurations.sh**
-  - Interactive script for creating users with shell selection
-  - Offers optional sudo privileges during user creation
-  - Copies SSH keys from a main user to newly created users
-  - Includes validation for usernames and proper error handling
-  - Supports both single and multiple user creation modes
-
-#### Milestone B - (NOT FINISHED)
-- Currently empty milestone with no implemented components
-
-#### Milestone C - Backup and Monitoring (FINISHED)
-
-- **BackUpScript.sh**
-  - Automated backup solution for /etc directory
-  - Creates compressed tar.gz backups with date stamps
-  - Maintains logs in /var/log/backup.log
-  - Cleans up backups older than 60 days
-
-- **Monitoring Stack**
-  - **Prometheus**: Metrics collection and storage
-  - **Node Exporter**: System metrics exporter for Linux hosts
-  - **Grafana**: Visualization dashboard for monitoring metrics
-  - Includes pre-configured prometheus.yml targeting multiple hosts
-  - Contains systemd service files for both Prometheus and Node Exporter
-
-### Technologies Used
-- **Linux Distribution**: Rocky Linux (Red Hat Enterprise Linux derivative)
-- **Virtualization**: KVM/QEMU with virt-install
+### Technologies
+- **OS**: Rocky Linux 9.5 (RHEL derivative)
+- **Virtualization**: KVM/QEMU, virt-install
 - **Monitoring**: Prometheus, Node Exporter, Grafana
 - **Scripting**: Bash automation
-- **Backup**: tar, cron for automation
+- **Backup**: tar, cron
 
-### Usage Instructions
-#### Setting up VMs (Milestone A)
-1. Ensure KVM, libvirt, and virt-manager are installed on your host system
-2. Adjust the ISO path and configuration variables in `VMs_installation_Script.sh`
-3. Run the script with sudo privileges to create the VMs
-4. Use `Users_Creatiations_Configurations.sh` to manage users on the VMs
-
-#### Setting up Monitoring (Milestone C)
-1. Install Prometheus and Node Exporter on target systems
-2. Configure the node_exporter.service and prometheus.service as systemd services
-3. Use the provided prometheus.yml configuration
-4. Set up Grafana for visualization using the included repository configuration
-
-#### Backup Automation
-1. Schedule `BackUpScript.sh` with cron for regular automated backups
-2. Ensure the backup directory `/backups` exists and has appropriate permissions
-3. Monitor `/var/log/backup.log` for backup status
-
-### Educational Goals
-This project is designed to provide hands-on experience with:
-- Linux system administration tasks
-- VM management with KVM/QEMU
-- User management and security
-- Backup strategies and automation
-- System monitoring with Prometheus/Grafana
-- Scripting for automation
-- Enterprise-level Linux server configurations
-
----
-
-## Project 2: Linux Automation Infrastructure (Prjct_02)
-
-### Project Overview
-
-This is a Linux automation infrastructure project (Prjct_02) that automates multi-tier application deployment using Ansible. The project provisions and configures Linux VMs for a complete application infrastructure including web, application, and database services, with CI/CD integration through GitHub Actions.
-
-### Key Features:
-- VM Provisioning using KVM/libvirt
-- Docker setup and containerized application deployment
-- NGINX reverse proxy configuration
-- PostgreSQL database hardening
-- Ansible Vault for secrets management
-- GitHub Actions for linting and idempotency testing
-
-### Architecture (FINISHED)
-- **Web Server VM** (WebServVM): Hosts reverse proxy and web applications
-- **Application Server VM** (AppServVM): Hosts application containers via Docker
-- **Database Server VM** (DataBaseServVM): PostgreSQL database with security hardening
-- **Ansible Control Node VM** (AnsibleOneVM): Used to run Ansible playbooks
-
-### Directory Structure
-
-```
-.
-├── .github/                    # GitHub Actions workflows
-├── cloud-init/                 # Cloud-init configuration for VM provisioning
-│   ├── user-data              # User configuration for VM creation
-│   └── meta-data              # Metadata configuration for VM creation
-├── config/                     # Additional configuration files
-├── images/                     # VM images and seed ISO files
-├── inventories/                # Ansible inventory & variables
-│   └── hosts.ini              # Host definitions
-├── playbooks/                  # Ansible playbooks
-│   ├── site.yml               # Main configuration playbook
-│   ├── create-vms.yml         # VM creation playbook
-│   ├── db_hardening.yml       # Database hardening playbook
-│   └── docker_setup.yml       # Docker setup playbook
-├── roles/                      # Ansible Galaxy roles
-│   ├── db_hardening/          # PostgreSQL hardening
-│   ├── docker_setup/          # Docker installation & app deployment
-│   └── reverse_proxy/         # NGINX reverse proxy configuration
-├── ansible.cfg                 # Ansible configuration file
-├── .ansible.cfg               # Additional Ansible configuration
-├── .gitignore                 # Git ignore patterns
-└── README.md                   # Project documentation
-```
-
-### Configuration Files (FINISHED)
-- **ansible.cfg**
-  - Sets roles path to `./roles`
-  - Specifies default inventory as `inventories/hosts.ini`
-  - Disables host key checking
-  - Sets vault password file to `.vault_pass.txt`
-  - Configures SSH connection to use `/home/amw/.ssh/config`
-
-- **hosts.ini (Inventory)**
-  - Defines groups of servers:
-    - `[web]` for web servers (WebServVM)
-    - `[db]` for database servers (DataBaseServVM)
-    - `[app]` for application servers (AppServVM)
-    - `[infra]` for infrastructure servers (AnsibleOneVM)
-
-### Playbooks (FINISHED)
-- `site.yml`: Main orchestration playbook that applies roles to respective VMs
-- `create-vms.yml`: Creates VMs using virt-install and cloud-init
-- `db_hardening.yml`: PostgreSQL hardening playbook
-- `docker_setup.yml`: Docker installation and application setup
-
-#### Execution
-Main configuration command:
+### Quick Start
 ```bash
-ansible-playbook -i inventories/hosts.ini playbooks/site.yml --vault-password-file .vault_pass.txt
+# Create VMs
+cd "Milestone A"
+sudo ./VMs_installation_Script.sh
+
+# Create users
+sudo ./Users_Creatiations_Configurations.sh
+
+# Setup monitoring (on each VM)
+cd "Milestone C"
+# Install and configure Prometheus, Node Exporter, Grafana
 ```
-
-### Ansible Roles (FINISHED)
-- `db_hardening`: Installs and hardens PostgreSQL database
-- `docker_setup`: Installs Docker and deploys application containers
-- `reverse_proxy`: Configures NGINX reverse proxy
-
-### CI/CD Workflows (FINISHED)
-- `lint.yml`: Performs Ansible linting on code changes
-- `idempotency.yml`: Tests playbook idempotency
-- `docker_deploy.yml`: Automates Docker deployment processes
-
-### Prerequisites (FINISHED)
-- **System Requirements**
-  - Ansible (latest version)
-  - Python 3 with pip
-  - libvirt/KVM (for VM provisioning)
-  - SSH access to target VMs
-
-- **Ansible Collections**
-  - Required collections:
-    - community.postgresql
-    - community.general
-  - Installation command:
-    ```bash
-    ansible-galaxy collection install community.postgresql community.general
-    ```
-
-### Secrets Management (FINISHED)
-- Sensitive data is stored encrypted in:
-  - `inventories/group_vars/db/secrets.yml` (encrypted with Ansible Vault)
-
-- Manage vault files with:
-  - `ansible-vault edit inventories/group_vars/db/secrets.yml`
-  - `ansible-vault view inventories/group_vars/db/secrets.yml`
-
-### Cloud-Init Configuration (FINISHED)
-- VMs are provisioned using cloud-init with:
-  - `user-data`: Defines users, SSH keys, and packages to install
-  - `meta-data`: Provides instance metadata
-
-### Development Conventions (FINISHED)
-- Use Ansible best practices for playbook and role structure
-- Store sensitive data in encrypted vault files
-- Test changes with idempotency workflows
-- Follow role separation for different infrastructure components
-- Use consistent variable naming across playbooks
-
-### Working with This Project (FINISHED)
-1. Ensure VMs are created with correct IP addresses
-2. Update inventory file with VM IP addresses
-3. Configure SSH access in `~/.ssh/config`
-4. Provide vault password file if using encrypted variables
-5. Run main configuration with `site.yml` playbook
-
-This project is designed for learning and implementing Linux automation with Ansible, focusing on infrastructure as code principles and security best practices.
 
 ---
 
-## Project 3: AWS High Availability (Prjct_03)
+## Project 2: Linux Automation Infrastructure
 
-### Project Overview
+**Repository:** [`linux-automation-infrastructure-Prjct_02`](./linux-automation-infrastructure-Prjct_02/)
 
-This is a hands-on DevOps and Linux Administration practice project focused on building a **High Availability (HA) architecture on AWS**. The project uses **Terraform** for infrastructure provisioning, **Ansible** for configuration management, **HAProxy + Keepalived** for redundancy, and **ELK Stack** for observability.
+### Overview
+Automates multi-tier application deployment using Ansible with Infrastructure as Code principles. Provisions and configures Linux VMs for complete application infrastructure with CI/CD integration through GitHub Actions.
 
-The project simulates real-world DevOps workflows and practices, structured into 5 milestones that progressively build a complete HA infrastructure with failover, monitoring, and disaster recovery capabilities.
+### Architecture
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Ansible Control Node                     │
+│                    (AnsibleOneVM)                           │
+│                           │                                 │
+│         ┌─────────────────┼─────────────────┐               │
+│         │                 │                 │               │
+│    ┌────▼────┐      ┌─────▼─────┐      ┌──────▼──────┐      │
+│    │  Web    │      │    App    │      │     DB      │      │
+│    │ WebServ │      │  AppServ  │      │  DataServ   │      │
+│    │  NGINX  │      │   Docker  │      │  PostgreSQL │      │
+│    │ Reverse │      │    App    │      │  Hardened   │      │
+│    │  Proxy  │      │ Container │      │             │      │
+│    └─────────┘      └───────────┘      └─────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+```
 
-### Architecture Components
+### Completed Components
 
-- **AWS VPC** with public/private subnets
-- **4 EC2 Instances**:
-  - `lb1`, `lb2` → HAProxy + Keepalived (VIP failover)
-  - `web1`, `web2` → Nginx web servers with data sync
-- **Terraform** → Infrastructure as Code (IaC)
-- **Ansible** → Automated configuration and deployment
-- **ELK Stack** → Centralized logging and observability
-- **Optional** → Docker Swarm for container orchestration
+#### ✅ Infrastructure
+- VM provisioning using KVM/libvirt with cloud-init
+- Ansible inventory with host groups (`[web]`, `[app]`, `[db]`, `[infra]`)
+- Ansible Vault for secrets management
 
-### Project Structure
+#### ✅ Ansible Playbooks
+| Playbook | Purpose |
+|----------|---------|
+| `site.yml` | Main orchestration playbook |
+| `create-vms.yml` | VM creation with virt-install |
+| `db_hardening.yml` | PostgreSQL security hardening |
+| `docker_setup.yml` | Docker installation & app deployment |
 
-#### Milestone 0: Foundations (FINISHED)
-- Configure Terraform Provider & Variables
-- Create VPC, Subnets, Route Table, and Security Groups
-- Provision 4 EC2 Instances with Static Private IPs
-- Configure Ansible Inventory and Test Connectivity
+#### ✅ Ansible Roles
+- `db_hardening`: PostgreSQL installation and security configuration
+- `docker_setup`: Docker installation and containerized application deployment
+- `reverse_proxy`: NGINX reverse proxy configuration
 
-#### Milestone 1: Core HA Architecture (IN PROGRESS)
-- Deploy HAProxy on Load Balancers
-- Configure HAProxy Frontend and Backend Pools
-- Enable HAProxy Stats Page for Monitoring
-- Install and Configure Keepalived for VIP
-- Test VIP Failover Between Load Balancers
+#### ✅ CI/CD (GitHub Actions)
+- `lint.yml`: Ansible linting on code changes
+- `idempotency.yml`: Playbook idempotency testing
+- `docker_deploy.yml`: Automated Docker deployment
 
-#### Milestone 2: Backend & Data Sync (NOT FINISHED)
-- Deploy Nginx on Web Servers
-- Configure HAProxy to Balance Web Servers
-- Implement File Synchronization Between Web Servers
-- Test Data Consistency and Failover
+### Technologies
+- **Configuration Management**: Ansible
+- **Containerization**: Docker
+- **Database**: PostgreSQL (hardened)
+- **Web Server**: NGINX
+- **CI/CD**: GitHub Actions
+- **Secrets**: Ansible Vault
 
-#### Milestone 3: Observability & Logging (NOT FINISHED)
-- Deploy ELK Stack with Docker
-- Configure Log Forwarding with Filebeat
-- Validate Logs in Kibana and Build a Dashboard
+### Quick Start
+```bash
+# Install required collections
+ansible-galaxy collection install community.postgresql community.general
 
-#### Milestone 4: Container Orchestration (NOT FINISHED)
-- Initialize Docker Swarm Cluster
-- Deploy a Sample Web App as Docker Service
-- Configure Health Checks and Validate Service Recovery
+# Run main playbook
+ansible-playbook -i inventories/hosts.ini playbooks/site.yml \
+  --vault-password-file .vault_pass.txt
+```
 
-#### Milestone 5: Disaster Recovery & Cleanup (NOT FINISHED)
-- Simulate Load Balancer Failure and Validate VIP Failover
-- Test Web Server Data Recovery
-- Implement Terraform Destroy and Cleanup
-- Write Final Documentation and Lessons Learned
+---
 
-### Building and Running
+## Project 3: Linux High Availability
 
-#### Prerequisites
-- AWS account with appropriate permissions
-- Terraform installed
-- Ansible installed
-- SSH key pair for EC2 instances
+**Repository:** [`linux-high-availability-Prjct_03`](./linux-high-availability-Prjct_03/)
 
-#### Quick Start Steps
-1. Clone the repository
-2. Configure AWS credentials
-3. Initialize Terraform in the terraform directory
-4. Configure Ansible inventory with the provisioned instance IP addresses
-5. Run Ansible playbooks to configure the infrastructure
+### Overview
+Hands-on DevOps project focused on building a **High Availability (HA) architecture on cloud platforms**. Uses Terraform for infrastructure provisioning, Ansible for configuration management, HAProxy + Keepalived for redundancy, and ELK Stack for observability.
 
-#### Terraform Configuration
-The project contains a `providers.tf` file that configures the AWS provider:
-- AWS region: eu-west-1 (Ireland)
-- AWS provider version: ~> 5.0
+### Architecture
+```
+┌──────────────────────────────────────────────────────┐
+│                         Cloud VPC/VNet               │
+│  ┌────────────────────────────────────────────────┐  │
+│  │                    Public Subnet               │  │
+│  │  ┌─────────────┐           ┌─────────────┐     │  │
+│  │  │   lb1       │ ◄───────► │    lb2      │     │  │
+│  │  │  HAProxy    │   VRRP    │   HAProxy   │     │  │
+│  │  │ Keepalived  │   VIP     │  Keepalived │     │  │
+│  │  └──────┬──────┘           └──────┬──────┘     │  │
+│  └─────────│─────────────────────────│────────────┘  │
+│            │                         │               │
+│  ┌─────────│─────────────────────────│────────────┐  │
+│  │                    Private Subnet              │  │
+│  │  ┌──────▼──────┐           ┌──────▼──────┐     │  │
+│  │  │    web1     │           │    web2     │     │  │
+│  │  │    Nginx    │ ◄───────► │    Nginx    │     │  │
+│  │  │             │   rsync   │             │     │  │
+│  │  └─────────────┘           └─────────────┘     │  │
+│  └────────────────────────────────────────────────┘  │
+│                                                      │
+│  ┌────────────────────────────────────────────────┐  │
+│  │                    ELK Stack (Docker)          │  │
+│  │  Elasticsearch │ Logstash │ Kibana │ Filebeat  │  │
+│  └────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────┘
+```
 
-### Tools Used (FINISHED)
-- **Terraform** – Infrastructure as Code
-- **Ansible** – Configuration Management
-- **HAProxy + Keepalived** – High Availability
-- **Nginx** – Web Servers
-- **ELK Stack** – Observability & Logging
-- **Docker Swarm (Optional)** – Container Orchestration
-- **GitHub Projects & Issues** – Task management
+### Project Roadmap
 
-### Project Status (SUMMARY)
-- Milestone 0: Foundations – Ready
-- Milestone 1: Core HA Architecture – In Progress
-- Milestone 2: Backend & Data Sync – Pending
-- Milestone 3: Observability & Logging – Pending
-- Milestone 4: Container Orchestration – Optional
-- Milestone 5: Disaster Recovery & Cleanup – Pending
+#### ✅ Milestone 0: Foundations (In Progress)
+- [x] Configure Terraform Provider & Variables
+- [x] Create VPC/VNet, Subnets, Route Table, Security Groups
+- [x] Provision 4 VM Instances with Static Private IPs
+- [ ] Configure Ansible Inventory and Test Connectivity
 
-### Development Conventions (FINISHED)
-This project follows DevOps best practices:
-- Infrastructure as Code using Terraform
-- Configuration management with Ansible
-- High availability through load balancing and failover mechanisms
-- Centralized logging and monitoring
-- Proper security group configuration for network security
-- Use of VRRP protocol for VIP failover between load balancers
+#### 🚧 Milestone 1: Core HA Architecture (Pending)
+- [ ] Deploy HAProxy on Load Balancers
+- [ ] Configure HAProxy Frontend and Backend Pools
+- [ ] Enable HAProxy Stats Page for Monitoring
+- [ ] Install and Configure Keepalived for VIP
+- [ ] Test VIP Failover Between Load Balancers
 
-### File Structure
-- `README.md` – Main project documentation
-- `RoadMap.md` – Detailed milestone breakdown
-- `providers.tf` – Terraform AWS provider configuration
-- `.gitignore` – Files and directories to exclude from Git
-- `LICENSE` – MIT License terms
-- `SSH_Keys/` – Directory for SSH key storage (git-ignored)
-- `AWS Credentials/` – Directory for AWS credentials (git-ignored)
+#### ⏳ Milestone 2: Backend & Data Sync (Pending)
+- [ ] Deploy Nginx on Web Servers
+- [ ] Configure HAProxy to Balance Web Servers
+- [ ] Implement File Synchronization (rsync/DRBD)
+- [ ] Test Data Consistency and Failover
 
-### Key Learning Objectives (FINISHED)
-- High Availability architecture design and implementation
-- Infrastructure as Code with Terraform
-- Configuration management with Ansible
-- Load balancing with HAProxy
-- Failover mechanisms with Keepalived
-- Data synchronization between servers
-- Centralized logging and observability
-- Container orchestration (optional advanced topic)
-- Disaster recovery and cleanup procedures
+#### ⏳ Milestone 3: Observability & Logging (Pending)
+- [ ] Deploy ELK Stack with Docker
+- [ ] Configure Log Forwarding with Filebeat
+- [ ] Validate Logs in Kibana and Build Dashboard
+
+#### ⏳ Milestone 4: Container Orchestration (Optional)
+- [ ] Initialize Docker Swarm Cluster
+- [ ] Deploy Sample Web App as Docker Service
+- [ ] Configure Health Checks and Service Recovery
+
+#### ⏳ Milestone 5: Disaster Recovery & Cleanup (Pending)
+- [ ] Simulate Load Balancer Failure
+- [ ] Test Web Server Data Recovery
+- [ ] Implement Terraform Destroy and Cleanup
+- [ ] Write Final Documentation
+
+### Technologies
+- **IaC**: Terraform (AWS provider ~> 5.0, region: eu-west-1)
+- **Configuration**: Ansible
+- **Load Balancing**: HAProxy
+- **High Availability**: Keepalived (VRRP)
+- **Web Server**: Nginx
+- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana, Filebeat)
+- **Orchestration**: Docker Swarm (optional)
+- **Data Sync**: rsync
+
+### Quick Start
+```bash
+# Clone and navigate
+git clone https://github.com/AhmadMWaddah/linux-high-availability-Prjct_03.git
+cd linux-high-availability-Prjct_03/
+
+# Initialize and apply Terraform
+cd lha-terraform
+terraform init
+terraform apply
+
+# Configure and run Ansible
+cd ../lha-ansible
+ansible all -m ping -i inventories/hosts.ini
+```
+
+---
+
+## 🎯 Learning Path Summary
+
+This project collection follows a progressive learning path:
+
+```
+Linux Basics → Automation → High Availability
+     │              │              │
+     ▼              ▼              ▼
+  RHCSA Skills   RHCE Skills   DevOps/SRE Skills
+     │              │              │
+     ├─ VM Mgmt     ├─ Ansible     ├─ Terraform
+     ├─ Users       ├─ Playbooks   ├─ HA Architecture
+     ├─ Bash        ├─ Roles       ├─ Load Balancing
+     ├─ Monitoring  ├─ Docker      ├─ Failover
+     └─ Backups     └─ CI/CD       └─ ELK Stack
+```
+
+---
+
+## 📊 Skills Demonstrated
+
+| Category | Skills |
+|----------|--------|
+| **Linux Administration** | User management, systemd services, file permissions, SSH, cron |
+| **Virtualization** | KVM/QEMU, virt-install, cloud-init |
+| **Infrastructure as Code** | Terraform (AWS), Ansible playbooks and roles |
+| **Configuration Management** | Ansible, Ansible Vault, inventory management |
+| **Containerization** | Docker, Docker Swarm, containerized applications |
+| **Web Servers** | NGINX configuration, reverse proxy |
+| **Databases** | PostgreSQL installation, hardening, security |
+| **High Availability** | HAProxy, Keepalived, VRRP, VIP failover |
+| **Monitoring & Logging** | Prometheus, Grafana, ELK Stack, Filebeat |
+| **Scripting** | Bash automation, validation, error handling |
+| **CI/CD** | GitHub Actions, linting, idempotency testing |
+| **Backup & Recovery** | Automated backups, retention policies, disaster recovery |
+
+---
+
+## 📁 Repository Structure
+
+```
+RHCSA_RHCE_GitHub/
+├── README.md                              # This file
+├── RHCSA RHCE Project.md                  # Detailed project documentation
+├── enterprise-linux-basics-Prjct_01/      # Project 1
+│   ├── Milestone A/                       # VM setup & user management
+│   └── Milestone C/                       # Backup & monitoring
+├── linux-automation-infrastructure-Prjct_02/  # Project 2
+│   ├── playbooks/                         # Ansible playbooks
+│   ├── roles/                             # Ansible roles
+│   ├── inventories/                       # Inventory files
+│   └── .github/                           # GitHub Actions workflows
+└── linux-high-availability-Prjct_03/      # Project 3
+    ├── lha-terraform/                     # Terraform configurations
+    ├── lha-ansible/                       # Ansible configurations
+    └── Media/                             # Documentation images
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Linux host with KVM/libvirt support (Projects 1 & 2)
+- AWS account with appropriate permissions (Project 3)
+- Required tools:
+  ```bash
+  # Core tools
+  ansible
+  terraform
+  python3-pip
+  
+  # Virtualization (Projects 1 & 2)
+  qemu-kvm
+  libvirt
+  virt-manager
+  
+  # Ansible collections
+  ansible-galaxy collection install community.general community.postgresql
+  ```
+
+### Recommended Order
+1. Start with **Project 1** for Linux fundamentals
+2. Move to **Project 2** for automation with Ansible
+3. Complete with **Project 3** for high availability architecture
+
+---
+
+## 📜 License
+
+All projects are licensed under the MIT License – free to use and modify for learning purposes.
+
+---
+
+## 🤝 Contributing
+
+These projects are primarily practice labs for learning purposes. Feel free to:
+- Fork and experiment
+- Suggest improvements via issues
+- Extend milestones with additional features
 
 ---
